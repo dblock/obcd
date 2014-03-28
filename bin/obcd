@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+require 'gli'
+require 'obcd'
+
+include GLI::App
+
+program_desc 'Deal with obsessive compulsive issues of programmers in Objective-C'
+
+flag [:p, :path], desc: 'Path to search', default_value: Dir.pwd
+
+default_command :help
+
+pre do |global_options, command, options, args|
+  $obcd = Obcd::Finder.new(global_options[:path])
+end
+
+desc "Find files that don't match rules."
+arg_name 'check, check[, check]*'
+long_desc "Available checks:\n\n" + Obcd::Checks.all.map { |check|
+  "- #{check.name.split('::').last}: #{check.desc}"
+}.join("\n")
+command :find do |c|
+  c.action do |global_options, options, args|
+    root = Pathname.new($obcd.path)
+
+    checks = args.map do |arg|
+      begin
+        "Obcd::Checks::#{arg}".constantize
+      rescue Exception => e
+        STDERR.puts "Invalid check #{arg}, #{e.message}."
+        exit_now! nil, -1
+      end
+    end
+
+    if checks.empty?
+      STDERR.puts "Please specify at least one check. Run 'obcd help find' for a list."
+      exit_now! nil, -1
+    end
+
+    $obcd.find do |filename|
+      relative_path = Pathname.new(filename).relative_path_from(root).to_s
+      STDOUT.write "Checking #{relative_path}: "
+      violations = {}
+      checks.each do |check|
+        instance = check.new(filename)
+        instance.check!
+        instance_violations = instance.violations
+        violations.merge! check => instance_violations if ! instance_violations.empty?
+      end
+      if violations.empty?
+        STDOUT.puts "[ok]"
+      else
+        puts "[#{violations.count} violation(s) found]"
+        violations.each_pair do |check, violations|
+          violations.each do |violation|
+            puts " #{check.name.split('::').last}: #{violation}"
+          end
+        end
+      end
+    end
+  end
+end
+
+exit run(ARGV)
