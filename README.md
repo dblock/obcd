@@ -28,13 +28,13 @@ obcd help
 ```
 $ obcd --path=spec/fixtures find HeaderStyle
 
-Checking HeaderStyle/WrongExtension.m: [1 violation(s) found]
+HeaderStyle/WrongExtension.m: 1 violation
  HeaderStyle: line 2: Filename extension doesn't match, expected .m, got .h.
 
-Checking HeaderStyle/WrongFilename.h: [1 violation(s) found]
+HeaderStyle/WrongFilename.h: 1 violation
  HeaderStyle: line 2: Expected header to include file name, instead got //  ThisFilenameIsWrong.h.
 
-Found 2 violation(s).
+Found 2 violations.
 ```
 
 ## Contributing
