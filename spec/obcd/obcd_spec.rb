@@ -23,7 +23,18 @@ describe Obcd do
         output.should eq "Please specify at least one check. Run 'obcd help find' for a list.\n"
       end
       context "HeaderStyle" do
-        pending "TODO"
+        it "finds violations in a single file" do
+          output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle/WrongExtension.m" find HeaderStyle 2>&1`
+          output.chomp.should eq [
+            "WrongExtension.m: 1 violation",
+            " HeaderStyle: line 2: Filename extension doesn't match, expected .m, got .h.",
+            "Found 1 violation."
+          ].join("\n")
+        end
+        it "finds violations in multiple files" do
+          output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle" find HeaderStyle 2>&1`
+          output.split("\n").last.should == "Found 6 violations."
+        end
       end
     end
   end

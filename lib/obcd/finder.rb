@@ -4,13 +4,17 @@ module Obcd
 
     def initialize(path)
       @path = File.expand_path(path)
-      raise Errno::ENOENT.new(path) unless Dir.exists?(@path)
+      raise Errno::ENOENT.new(path) unless File.exists?(@path) || Dir.exists?(@path)
     end
 
     def find(&block)
-      Find.find(path) do |path|
-        if ['.h', '.m', '.pch'].include? File.extname(path)
-          yield path
+      if File.file?(path)
+        yield path
+      else
+        Find.find(path) do |path|
+          if ['.h', '.m', '.pch'].include? File.extname(path)
+            yield path
+          end
         end
       end
     end

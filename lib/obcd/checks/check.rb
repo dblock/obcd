@@ -11,6 +11,12 @@ module Obcd
       def check!
         # implement in a child class
       end
+
+      def self.check(filename)
+        instance = self.new(filename)
+        instance.check!
+        instance.violations
+      end
     end
   end
 end

@@ -7,6 +7,7 @@ include GLI::App
 program_desc 'Deal with obsessive compulsive issues of programmers in Objective-C'
 
 flag [:p, :path], desc: 'Path to search', default_value: Dir.pwd
+switch [:v, :verbose], desc: 'Verbose', default_value: false
 
 default_command :help
 
@@ -21,7 +22,7 @@ long_desc "Available checks:\n\n" + Obcd::Checks.all.map { |check|
 }.join("\n")
 command :find do |c|
   c.action do |global_options, options, args|
-    root = Pathname.new($obcd.path)
+    root = File.file?($obcd.path) ? Pathname.new(File.dirname($obcd.path)) : Pathname.new($obcd.path)
 
     checks = args.map do |arg|
       begin
@@ -40,19 +41,18 @@ command :find do |c|
     violation_count = 0
     $obcd.find do |filename|
       relative_path = Pathname.new(filename).relative_path_from(root).to_s
-      STDOUT.write "Checking #{relative_path}: "
+      STDOUT.write "Checking #{relative_path}: " if global_options[:verbose]
       violations = {}
       checks.each do |check|
-        instance = check.new(filename)
-        instance.check!
-        instance_violations = instance.violations
+        instance_violations = check.check(filename)
         violation_count += instance_violations.count
-        violations.merge! check => instance_violations if ! instance_violations.empty?
+        violations.merge! check => instance_violations unless instance_violations.empty?
       end
       if violations.empty?
-        STDOUT.puts "[ok]"
+        STDOUT.puts "ok" if global_options[:verbose]
       else
-        puts "[#{violations.count} violation(s) found]"
+        STDOUT.write "#{relative_path}: " unless global_options[:verbose]
+        puts "#{violations.count} violation#{violations.count == 1 ? '' : 's'}"
         violations.each_pair do |check, violations|
           violations.each do |violation|
             puts " #{check.name.split('::').last}: #{violation}"
@@ -60,7 +60,9 @@ command :find do |c|
         end
       end
     end
-    puts "Found #{violation_count} violation(s)."
+    if violation_count > 0 || global_options[:verbose]
+      puts "Found #{violation_count} violation#{violation_count == 1 ? '' : 's'}."
+    end
     exit_now! nil, violation_count
   end
 end

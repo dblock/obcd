@@ -4,11 +4,12 @@ Obcd
 [![Build Status](https://travis-ci.org/dblock/obcd.png)](https://travis-ci.org/dblock/obcd)
 
 Deal with obsessive compulsive issues of programmers in Objective-C.
-This is very much work in progress, we begin with finding file headers that don't match a well defined style.
 
-## Features
+Eventually, the goal of OBCD is to become to Objective-C what [Rubocop](https://github.com/bbatsov/rubocop) is to Ruby. So far it does one useful thing: help you fix the comment style on top of .h and .m files. For example, it can tell you that the name of the file in that comment doesn't match the actual file name.
 
-* Normalize header style on top of .m and .h files.
+## Checks
+
+* [HeaderStyle](checks/HeaderStyle.md): Check header style on top of .h, .m and .pch files.
 
 ## Usage
 
@@ -22,13 +23,19 @@ gem install obcd
 obcd help
 ```
 
-#### Find Issues
+#### Example: Find Files with Invalid Headers
 
 ```
-obcd find
-```
+$ obcd --path=spec/fixtures find HeaderStyle
 
-The `find` command lists all the files that contain known issues.
+Checking HeaderStyle/WrongExtension.m: [1 violation(s) found]
+ HeaderStyle: line 2: Filename extension doesn't match, expected .m, got .h.
+
+Checking HeaderStyle/WrongFilename.h: [1 violation(s) found]
+ HeaderStyle: line 2: Expected header to include file name, instead got //  ThisFilenameIsWrong.h.
+
+Found 2 violation(s).
+```
 
 ## Contributing
 
