@@ -37,6 +37,7 @@ command :find do |c|
       exit_now! nil, -1
     end
 
+    violation_count = 0
     $obcd.find do |filename|
       relative_path = Pathname.new(filename).relative_path_from(root).to_s
       STDOUT.write "Checking #{relative_path}: "
@@ -45,6 +46,7 @@ command :find do |c|
         instance = check.new(filename)
         instance.check!
         instance_violations = instance.violations
+        violation_count += instance_violations.count
         violations.merge! check => instance_violations if ! instance_violations.empty?
       end
       if violations.empty?
@@ -58,6 +60,8 @@ command :find do |c|
         end
       end
     end
+    puts "Found #{violation_count} violation(s)."
+    exit_now! nil, violation_count
   end
 end
 
