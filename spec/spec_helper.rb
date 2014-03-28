@@ -4,4 +4,3 @@ require 'rubygems'
 require 'rspec'
 require 'tmpdir'
 require 'obcd'
-

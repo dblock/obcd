@@ -1,0 +1,28 @@
+AllCops:
+  Excludes:
+    - vendor/**
+    - bin/**
+    - .bundle/**
+
+LineLength:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+ClassLength:
+  Enabled: false
+
+Documentation:
+  # don't require classes to be documented
+  Enabled: false
+
+RaiseArgs:
+  # don't care for what kind of raise
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+BlockNesting:
+  Max: 4

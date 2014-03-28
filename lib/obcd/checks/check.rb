@@ -13,11 +13,10 @@ module Obcd
       end
 
       def self.check(filename)
-        instance = self.new(filename)
+        instance = new(filename)
         instance.check!
         instance.violations
       end
     end
   end
 end
-
