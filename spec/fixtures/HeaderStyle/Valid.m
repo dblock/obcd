@@ -8,6 +8,6 @@
 
 #import "valid.h"
 
-@implemetation Valid
+@implementation Valid
 
 @end
