@@ -27,7 +27,7 @@ describe Obcd do
           output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle/WrongExtension.m" find HeaderStyle 2>&1`
           output.chomp.should eq [
             'WrongExtension.m: 1 violation',
-            " HeaderStyle: line 2: Filename extension doesn't match, expected .m, got .h.",
+            "#{@fixtures}/HeaderStyle/WrongExtension.m:2:1: warning: HeaderStyle: Filename extension doesn't match, expected .m, got .h.",
             'Found 1 violation.'
           ].join("\n")
         end
