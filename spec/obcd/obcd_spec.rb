@@ -42,7 +42,7 @@ describe Obcd do
         end
         it 'finds violations in multiple files' do
           output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle" find HeaderStyle 2>&1`
-          output.split("\n").last.should == 'Found 8 violations.'
+          output.split("\n").last.should == 'Found 9 violations.'
         end
       end
     end

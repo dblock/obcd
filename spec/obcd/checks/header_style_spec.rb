@@ -20,6 +20,11 @@ describe Obcd::Checks::HeaderStyle do
     violations.count.should eq 1
     violations[0].to_s.should eq 'line 2: Expected header to include file name, instead got //  ThisFilenameIsWrong.h.'
   end
+  it 'finds a missing blank after the copyright violation' do
+    violations = Obcd::Checks::HeaderStyle.check(File.join(@fixtures, 'MissingBlankAfterCopyright.h'))
+    violations.count.should eq 1
+    violations[0].to_s.should eq 'line 7: Expected a blank // after copyright.'
+  end
   ['MissingCopyright.h', 'MissingFilename.h', 'MissingSlashSlash.h', 'MissingTrailingSlashSlash.h'].each do |filename|
     it "finds that the number of lines in header doesn't match in #{filename}" do
       violations = Obcd::Checks::HeaderStyle.check(File.join(@fixtures, filename))
