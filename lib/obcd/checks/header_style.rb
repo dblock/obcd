@@ -30,7 +30,7 @@ module Obcd
           violations << Obcd::Violations::Violation.new(4, 'Expected a blank // after company name.') unless head[3] == '//'
           # TODO: created by
           # TODO: copyright
-          violations << Obcd::Violations::Violation.new(7, 'Expected a blank // after copyright.') unless head[3] == '//'
+          violations << Obcd::Violations::Violation.new(7, 'Expected a blank // after copyright.') unless head[6] == '//'
         end
       end
 

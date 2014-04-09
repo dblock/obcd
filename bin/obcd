@@ -53,7 +53,8 @@ command :find do |c|
         STDOUT.puts "ok" if global_options[:verbose]
       else
         STDOUT.write "#{relative_path}: " unless global_options[:verbose]
-        puts "#{violations.count} violation#{violations.count == 1 ? '' : 's'}"
+        all_file_violations = violations.values.flatten
+        puts "#{all_file_violations.count} violation#{all_file_violations.count == 1 ? '' : 's'}"
         violations.each_pair do |check, violations|
           violations.each do |violation|
             puts "#{path}:#{violation.line}:1: warning: #{check.name.split('::').last}: #{violation.description}"
