@@ -9,7 +9,7 @@ Eventually, the goal of OBCD is to become to Objective-C what [Rubocop](https://
 
 ## Checks
 
-* [HeaderStyle](checks/HeaderStyle.md): Check header style on top of .h, .m and .pch files.
+* [HeaderStyle](docs/checks/HeaderStyle.md): Check header style on top of .h, .m and .pch files.
 
 ## Usage
 
