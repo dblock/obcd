@@ -51,7 +51,7 @@ You can also run OBCD as an Xcode build phase in order to see warnings inline in
 
 The next time you build your project you should see any OBCD warnings alongside others:
 
-![Xcode Issues Screenshot](https://cloud.githubusercontent.com/assets/594059/2651627/a0b182bc-bf92-11e3-8a78-f1024e32460b.png)
+![Xcode Warnings Screenshot](docs/xcode/obcd-warnings.png)
 
 ## Contributing
 
