@@ -40,7 +40,8 @@ command :find do |c|
 
     violation_count = 0
     $obcd.find do |filename|
-      relative_path = Pathname.new(filename).relative_path_from(root).to_s
+      path = Pathname.new(filename)
+      relative_path = path.relative_path_from(root).to_s
       STDOUT.write "Checking #{relative_path}: " if global_options[:verbose]
       violations = {}
       checks.each do |check|
@@ -55,7 +56,7 @@ command :find do |c|
         puts "#{violations.count} violation#{violations.count == 1 ? '' : 's'}"
         violations.each_pair do |check, violations|
           violations.each do |violation|
-            puts " #{check.name.split('::').last}: #{violation}"
+            puts "#{path}:#{violation.line}:1: warning: #{check.name.split('::').last}: #{violation.description}"
           end
         end
       end
