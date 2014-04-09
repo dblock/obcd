@@ -31,9 +31,18 @@ describe Obcd do
             'Found 1 violation.'
           ].join("\n")
         end
+        it 'finds multiple violations in a single file' do
+          output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle/MissingFilenameAndBlankAfterCompanyName.h" find HeaderStyle 2>&1`
+          output.chomp.should eq [
+            'MissingFilenameAndBlankAfterCompanyName.h: 2 violations',
+            ' HeaderStyle: line 2: Filename extension doesn\'t match, expected .h, got .',
+            ' HeaderStyle: line 4: Expected a blank // after company name.',
+            'Found 2 violations.'
+          ].join("\n")
+        end
         it 'finds violations in multiple files' do
           output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle" find HeaderStyle 2>&1`
-          output.split("\n").last.should == 'Found 6 violations.'
+          output.split("\n").last.should == 'Found 8 violations.'
         end
       end
     end
