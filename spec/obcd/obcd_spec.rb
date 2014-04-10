@@ -35,8 +35,8 @@ describe Obcd do
           output = `"#{@binary}" --path="#{@fixtures}/HeaderStyle/MissingFilenameAndBlankAfterCompanyName.h" find HeaderStyle 2>&1`
           output.chomp.should eq [
             'MissingFilenameAndBlankAfterCompanyName.h: 2 violations',
-            ' HeaderStyle: line 2: Filename extension doesn\'t match, expected .h, got .',
-            ' HeaderStyle: line 4: Expected a blank // after company name.',
+            "#{@fixtures}/HeaderStyle/MissingFilenameAndBlankAfterCompanyName.h:2:1: warning: HeaderStyle: Filename extension doesn't match, expected .h, got .",
+            "#{@fixtures}/HeaderStyle/MissingFilenameAndBlankAfterCompanyName.h:4:1: warning: HeaderStyle: Expected a blank // after company name.",
             'Found 2 violations.'
           ].join("\n")
         end
