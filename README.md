@@ -10,6 +10,7 @@ Eventually, the goal of OBCD is to become to Objective-C what [Rubocop](https://
 ## Checks
 
 * [HeaderStyle](docs/checks/HeaderStyle.md): Check header style on top of .h, .m and .pch files.
+* [SpectaFocus](docs/checks/SpectaFocus.md): Detect instances of focused specs (e.g. fdescribe(…), fit(…)).
 
 ## Usage
 
@@ -35,6 +36,24 @@ HeaderStyle/WrongFilename.h: 1 violation
 /Users/artsy/HeaderStyle/WrongExtension.h:2:1: warning: HeaderStyle: Expected header to include file name, instead got //  ThisFilenameIsWrong.h.
 
 Found 2 violations.
+```
+
+#### Example: Find Focused Specs
+
+```
+$ obcd --path=spec/fixtures find SpectaFocus
+
+SpectaFocus/FocusedSpec.m: 5 violations
+/Users/artsy/SpectaFocus/FocusedSpec.m:5:1: warning: SpectaFocus: Unexpected fcontext(…) found.
+/Users/artsy/SpectaFocus/FocusedSpec.m:6:1: warning: SpectaFocus: Unexpected fdescribe(…) found.
+/Users/artsy/SpectaFocus/FocusedSpec.m:7:1: warning: SpectaFocus: Unexpected fexample(…) found.
+/Users/artsy/SpectaFocus/FocusedSpec.m:9:1: warning: SpectaFocus: Unexpected fit(…) found.
+/Users/artsy/SpectaFocus/FocusedSpec.m:11:1: warning: SpectaFocus: Unexpected fspecify(…) found.
+SpectaFocus/InconsistentlyFormattedSpec.m: 2 violations
+
+/Users/artsy/SpectaFocus/InconsistentlyFormattedSpec.m:4:1: warning: SpectaFocus: Unexpected fdescribe(…) found.
+/Users/artsy/SpectaFocus/InconsistentlyFormattedSpec.m:5:1: warning: SpectaFocus: Unexpected fit(…) found.
+Found 7 violations.
 ```
 
 #### Xcode
