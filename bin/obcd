@@ -19,7 +19,7 @@ desc "Find files that don't match rules."
 arg_name 'check, check[, check]*'
 long_desc "Available checks:\n\n" + Obcd::Checks.all.map { |check|
   "- #{check.name.split('::').last}: #{check.desc}"
-}.join("\n")
+}.join("\n\n")
 command :find do |c|
   c.action do |global_options, options, args|
     root = File.file?($obcd.path) ? Pathname.new(File.dirname($obcd.path)) : Pathname.new($obcd.path)

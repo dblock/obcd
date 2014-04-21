@@ -15,6 +15,7 @@ describe Obcd do
         output = `"#{@binary}" help find`
         output.should include 'Available checks:'
         output.should include "- HeaderStyle: #{Obcd::Checks::HeaderStyle.desc}"
+        output.should include "- SpectaFocus: #{Obcd::Checks::SpectaFocus.desc}"
       end
     end
     describe '#find' do
