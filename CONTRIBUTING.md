@@ -1,16 +1,16 @@
 Contributing to OBCD
 ====================
 
-This project can't happen without your time. You're encouraged to submit [pull requests](https://github.com/intridea/obcd/pulls), [propose features and discuss issues](https://github.com/intridea/obcd/issues).
+This project can't happen without your time. You're encouraged to submit [pull requests](https://github.com/dblock/obcd/pulls), [propose features and discuss issues](https://github.com/dblock/obcd/issues).
 
 #### Fork the Project
 
-Fork the [project on Github](https://github.com/intridea/obcd) and check out your copy.
+Fork the [project on Github](https://github.com/dblock/obcd) and check out your copy.
 
 ```
 git clone https://github.com/contributor/obcd.git
 cd obcd
-git remote add upstream https://github.com/intridea/obcd.git
+git remote add upstream https://github.com/dblock/obcd.git
 ```
 
 #### Create a Topic Branch
@@ -95,7 +95,7 @@ git push origin my-feature-branch -f
 Update the [CHANGELOG](CHANGELOG.md) with the pull request number. A typical entry looks as follows.
 
 ```
-* [#123](https://github.com/intridea/obcd/pull/123): Reticulated splines - [@contributor](https://github.com/contributor).
+* [#123](https://github.com/dblock/obcd/pull/123): Reticulated splines - [@contributor](https://github.com/contributor).
 ```
 
 Amend your previous commit and force push the changes.
